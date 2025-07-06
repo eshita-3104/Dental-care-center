@@ -71,7 +71,7 @@ One of the most significant challenges was a series of environment and tooling i
 * **Problem**: The project automatically installed the brand new Tailwind CSS v4, which had tooling bugs with the official VS Code extension, preventing styles from being applied.
 * **Solution**: After methodical debugging (verifying paths, clearing cache, updating npm), I made a strategic decision to **downgrade to the stable Tailwind CSS v3**. This is a common real-world practice to ensure project stability over using a bleeding-edge version. The final fix required creating a workspace-specific `.vscode/settings.json` file to explicitly force the editor to associate `.css` files with Tailwind, resolving the stubborn configuration issue.
 
-* Managing Stale State & Ensuring Data Consistency:
+*Managing Stale State & Ensuring Data Consistency:*
 * **Problem**: After a CRUD operation on one page (e.g., updating an appointment's status), other components across the app (like the Dashboard KPIs) would display outdated information until a manual page refresh.
 * **Solution**: I engineered the global state management (Context API + useReducer) so that all data mutation functions first update the persistent storage (localforage) and then immediately dispatch an action to the central store. This updated the "in-memory" state, causing all subscribed components to re-render instantly with fresh data and ensuring a reactive, consistent user experience.
 
