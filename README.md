@@ -6,7 +6,7 @@ A comprehensive frontend application for ENTNT Dental Center, built with React a
 
 **Live Demo Link:** [**Your Deployed App Link Here**]
 
-**GitHub Repository:** [**Your GitHub Repository Link Here**]
+**GitHub Repository:** [**https://github.com/eshita-3104/Dental-care-center.git**]
 
 ---
 
@@ -39,17 +39,13 @@ A comprehensive frontend application for ENTNT Dental Center, built with React a
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-link>
+    git clone https://github.com/eshita-3104/Dental-care-center.git
     ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd dental-dashboard
-    ```
-3.  **Install dependencies:**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
-4.  **Run the development server:**
+3.  **Run the development server:**
     ```bash
     npm run dev
     ```
