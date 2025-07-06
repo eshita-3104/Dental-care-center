@@ -23,7 +23,7 @@ A comprehensive frontend application for ENTNT Dental Center, built with React a
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Framework**: React (with Vite)
 * **Language**: TypeScript
