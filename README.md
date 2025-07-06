@@ -4,7 +4,7 @@ A comprehensive frontend application for ENTNT Dental Center, built with React a
 
 ---
 
-**Live Demo Link:** [**Your Deployed App Link Here**]
+**Live Demo Link:** [**https://dental-care-center.vercel.app/**]
 
 **GitHub Repository:** [**https://github.com/eshita-3104/Dental-care-center.git**]
 
