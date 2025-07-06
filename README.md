@@ -54,14 +54,13 @@ A comprehensive frontend application for ENTNT Dental Center, built with React a
 ---
 
 ## Architecture & Technical Decisions
+* **State Management (Context API + useReducer)**: For managing the application's state, I chose React's built-in Context API over an external library like Redux. This decision was based on the project's scale; Context provides sufficient power for sharing global state (like user authentication and data) without the added boilerplate and dependencies of a larger library. To handle complex state transitions for CRUD operations, I leveraged the useReducer hook. By centralizing all data mutations (Add, Update, Delete) into a pure reducer function, the state logic became more predictable, scalable, and easier to debug than it would be with scattered useState calls.
 
-* **State Management**: I chose the **Context API** over a library like Redux because it's built into React and provides sufficient power for an application of this scale without adding extra dependencies. I separated concerns by creating distinct contexts for Authentication (`AuthContext`) and data (`PatientContext`). For managing CRUD operations, I leveraged the **`useReducer` hook**, which provides a more predictable and robust pattern for state transitions than multiple `useState` calls.
+* **Data Persistence (localforage**): The project required using client-side storage. Instead of interacting with the raw localStorage API—which is synchronous and only stores strings—I chose to use localforage. This library acts as a smart, asynchronous wrapper that provides a simple, promise-based API. It intelligently uses the best available storage method in the browser (preferring IndexedDB and falling back to localStorage), and it handles the serialization of complex objects automatically. This led to cleaner, more readable data-fetching code and prevented potential performance issues from blocking the main thread.
 
-* **Data Persistence**: The project required using `localStorage`. I chose to use **`localforage`**, a library that provides a simple, promise-based API while using `localStorage` (or IndexedDB/WebSQL) under the hood. This improved code readability and abstracted away the synchronous nature of `localStorage`.
+* **Component & Folder Structure**: I implemented a clear, scalable folder structure based on separation of concerns. Top-level pages reside in /pages, globally reusable UI elements in /components/common, feature-specific components in /components/feature, state logic in /context, and data-access logic in /api. This organization makes the codebase intuitive to navigate and maintain. Furthermore, I focused on creating reusable components like <Modal /> and <StatCard />. This approach not only keeps the code DRY (Don't Repeat Yourself) but also ensures a consistent UI and simplifies future updates.
 
-* **Component Structure**: I followed a clear component-based architecture, separating files by feature and type (`/pages`, `/components`, `/context`, `/api`). Reusable components like `<Modal />`, `<StatCard />`, and `<PatientTable />` were created to keep the code DRY and maintainable.
-
-* **Responsiveness**: I implemented a **mobile-first** responsive design strategy using Tailwind CSS's breakpoint prefixes (`md:`, `lg:`). This ensures a great user experience on any device. The most complex responsive feature was the admin sidebar, which collapses into a hamburger menu on mobile screens.
+* **Responsive Design (Mobile-First)**: I adopted a mobile-first responsive design strategy using Tailwind CSS. All base styles were written for the smallest screen size by default. I then used Tailwind's responsive prefixes (md:, lg:) to progressively enhance the layout for larger screens. The most complex responsive component was the AdminLayout, which uses a combination of React state and CSS transforms to render an interactive, slide-in navigation drawer on mobile that seamlessly transitions to a static, visible sidebar on desktops.
 
 ---
 
@@ -71,5 +70,9 @@ One of the most significant challenges was a series of environment and tooling i
 
 * **Problem**: The project automatically installed the brand new Tailwind CSS v4, which had tooling bugs with the official VS Code extension, preventing styles from being applied.
 * **Solution**: After methodical debugging (verifying paths, clearing cache, updating npm), I made a strategic decision to **downgrade to the stable Tailwind CSS v3**. This is a common real-world practice to ensure project stability over using a bleeding-edge version. The final fix required creating a workspace-specific `.vscode/settings.json` file to explicitly force the editor to associate `.css` files with Tailwind, resolving the stubborn configuration issue.
+
+* Managing Stale State & Ensuring Data Consistency:
+* **Problem**: After a CRUD operation on one page (e.g., updating an appointment's status), other components across the app (like the Dashboard KPIs) would display outdated information until a manual page refresh.
+* **Solution**: I engineered the global state management (Context API + useReducer) so that all data mutation functions first update the persistent storage (localforage) and then immediately dispatch an action to the central store. This updated the "in-memory" state, causing all subscribed components to re-render instantly with fresh data and ensuring a reactive, consistent user experience.
 
 This experience was a valuable lesson in debugging not just code, but also the development environment and tooling itself.
